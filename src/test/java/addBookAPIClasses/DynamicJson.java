@@ -11,8 +11,7 @@ import io.restassured.path.json.JsonPath;
 import static io.restassured.RestAssured.*;
 
 public class DynamicJson {
-	
-	String id;
+
 	
 //	*********************** ADD BOOK API ***********************
 	@Test(dataProvider="getData")
@@ -31,7 +30,7 @@ public class DynamicJson {
 		.extract().response().asString();
 		
 		JsonPath js=Reusable.rawToJson(response);
-		id=js.getString("ID");
+		String id=js.getString("ID");
 		System.out.println(id);
 		
 //		*********************** DELETE BOOK API ***********************
@@ -40,13 +39,7 @@ public class DynamicJson {
 		.body(Payload.deleteBookData(id))
 		.when().post("/Library/DeleteBook.php")
 		.then().log().all().assertThat().statusCode(200);
-	}
-	
-	
-	
-
-
-	
+	}	
 	
 	
 	@DataProvider
