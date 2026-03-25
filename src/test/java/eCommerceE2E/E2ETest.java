@@ -59,24 +59,61 @@ public class E2ETest {
 //		*********************** PLACE ORDER API ***********************
 		
 		RequestSpecification placeOrderBaseReq=new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
+				.addHeader("Authorization", token)
 				.setContentType(ContentType.JSON)
 				.build();
 		
 		OrderDetails_POJO orderDetails=new OrderDetails_POJO();
 		orderDetails.setCountry("India");
-		orderDetails.setProductOrderId(productId);
+		orderDetails.setProductOrderedId(productId);
 		
 		List<OrderDetails_POJO> orderList=new ArrayList<OrderDetails_POJO>();
 		orderList.add(orderDetails);
 		
-		PlaceOrderRequest_POJO placeOrder=new PlaceOrderRequest_POJO();
+		OrderRequest_POJO placeOrder=new OrderRequest_POJO();
 		placeOrder.setOrders(orderList);
 		
 		RequestSpecification placeOrderReq=given().log().all().spec(placeOrderBaseReq).body(placeOrder);
 		
 		String placeOrderResponse = placeOrderReq.when().post("/api/ecom/order/create-order")
 		.then().log().all().extract().response().asString();
+		
+		System.out.println(placeOrderResponse);
+		
+		JsonPath js1=new JsonPath(placeOrderResponse);
+		String orderId=js1.getString("orders[0]");
+		
+		System.out.println(orderId);
 
+		
+//		*********************** VIEW ORDER API ***********************
+		
+		RequestSpecification viewOrderBaseReq=new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
+				.addHeader("Authorization", token)
+				.build();
+		
+		String viewOrderResp = given().log().all().spec(viewOrderBaseReq).queryParam("id",orderId)
+		.when().get("/api/ecom/order/get-orders-details")
+		.then().log().all().extract().response().asString();
+		
+		System.out.println(viewOrderResp);
+		
+		
+//		*********************** DELETE ORDER API ***********************
+		
+		RequestSpecification deleteOrderBaseReq=new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
+				.addHeader("Authorization", token)
+				.build();
+		
+//		relaxedHTTPSValidation() in Rest Assured is used to bypass SSL certificate validation, 
+//		mainly for testing APIs hosted on environments with invalid or self-signed certificates
+		RequestSpecification deleteOrderReq = given().relaxedHTTPSValidation().log().all().spec(deleteOrderBaseReq).pathParam("productId",productId);
+		
+//		to make the product id generic, we need to encapsulate it inside {} so at runtime, the value will be placed
+		String deleteOrderResp = deleteOrderReq.when().delete("/api/ecom/product/delete-product/{productId}").then()
+		.log().all().extract().response().asString();
+		
+		System.out.println(deleteOrderResp);
 	
 	
 	

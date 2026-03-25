@@ -2,7 +2,7 @@ package eCommerceE2E;
 
 import java.util.List;
 
-public class PlaceOrderRequest_POJO {
+public class OrderRequest_POJO {
 	
 	private List<OrderDetails_POJO> orders;
 
