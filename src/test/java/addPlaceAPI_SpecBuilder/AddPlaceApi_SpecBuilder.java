@@ -1,11 +1,12 @@
 package addPlaceAPI_SpecBuilder;
 
 import static io.restassured.RestAssured.given;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import addPlaceAPI_POJOClasses.AddPlace_POJO;
 import addPlaceAPI_POJOClasses.locationPOJO;
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -17,12 +18,9 @@ public class AddPlaceApi_SpecBuilder {
 
 	public static void main(String[] args) {
 		
-
-		RestAssured.baseURI="https://rahulshettyacademy.com";
 		
 //		*********************** ADD PLACE API ***********************
-		
-//		creating the java object and setting the values to create the request payload
+
 		AddPlace_POJO app=new AddPlace_POJO();
 		app.setAccuracy(50);
 		app.setName("Frontline house");
