@@ -23,6 +23,8 @@ public class Basic_StaticJson {
 		
 //		to pass the request from an external JSON file
 		
+//		first read the content of static json file >> convert the content into byte[] >> convert byte[] into string
+		
 //		read the file content and store file location as Path object
 		Path path = Paths.get("D:\\Study material\\RestAssured\\addplace.json");
 		
