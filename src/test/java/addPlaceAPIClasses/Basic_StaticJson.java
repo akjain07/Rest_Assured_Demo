@@ -26,6 +26,11 @@ public class Basic_StaticJson {
 //		first read the content of static json file >> convert the content into byte[] >> convert byte[] into string
 		
 //		read the file content and store file location as Path object
+//		In Java, Path and Paths are classes from the java.nio.file package used for file and directory path handling.
+		
+//		Path is an interface that represents a file or directory path.
+//		Paths is a utility class used to create Path objects.
+		
 		Path path = Paths.get("D:\\Study material\\RestAssured\\addplace.json");
 		
 //		convert the content into a byte[]
